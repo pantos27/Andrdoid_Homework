@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndrdoidHomework.iml" filepath="$PROJECT_DIR$/AndrdoidHomework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson10-1/lesson10-1.iml" filepath="$PROJECT_DIR$/lesson10-1/lesson10-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson10exc1/lesson10exc1.iml" filepath="$PROJECT_DIR$/lesson10exc1/lesson10exc1.iml" />
+    </modules>
+  </component>
+</project>
