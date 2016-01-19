@@ -35,10 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:onClick="onSwitchClick"
                 android:id="@+id/switch1"
-                android:textOn="AAA"
-                android:textOff="BBB" />
+                android:textOn="Red"
+                android:textOff="Blue"
+                android:showText="true" />
 
             <EditText
                 android:layout_width="wrap_content"
