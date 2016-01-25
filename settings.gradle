@@ -1,1 +1,1 @@
-include ':app', ':lesson10exc1', ':lesson11'
+include ':app', ':lesson10exc1', ':lesson11', ':lesson12'
