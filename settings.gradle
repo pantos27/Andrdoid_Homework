@@ -1,1 +1,1 @@
-include ':lesson11', ':lesson12'
+include ':lesson11', ':lesson12', ':lesson12-exe3'

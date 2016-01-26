@@ -4,4 +4,5 @@
     <string name="KEY_COUNTRIES">countries_key</string>
     <string name="KEY_CITIES">cities_key</string>
     <string name="cities">Cities</string>
+    <string name="KEY_COLOURS">colours list</string>
 </resources>
