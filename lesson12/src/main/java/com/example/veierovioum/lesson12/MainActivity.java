@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Country> countries;
-
+    ArrayAdapter<Country> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,15 +21,17 @@ public class MainActivity extends AppCompatActivity {
         //check if countries list exists
         if (countries==null){
             if (savedInstanceState!=null){
+                //get countries list from saved state
                 this.countries= (ArrayList<Country>) savedInstanceState.get(getString(R.string.KEY_COUNTRIES));
             }
             else{
+                //create and fill countires list
                 this.countries = new ArrayList<>();
                 setCountries(this.countries);
             }
         }
 
-        final ArrayAdapter<Country> adapter=new ArrayAdapter<Country>(this,android.R.layout.simple_list_item_1,countries);
+        adapter=new ArrayAdapter<Country>(this,android.R.layout.simple_list_item_1,countries);
 
         ListView lView=(ListView)(findViewById(R.id.listViewCountries));
         lView.setAdapter(adapter);
@@ -62,7 +64,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        //sate countries list
         outState.putSerializable(getString(R.string.KEY_COUNTRIES),countries);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (countries.size()>0)
+        {
+            //remove last item on list
+            countries.remove(countries.size()-1);
+            adapter.notifyDataSetChanged();
+        }
+        else {
+            //close
+            super.onBackPressed();
+        }
     }
 }

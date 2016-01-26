@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndrdoidHomework.iml" filepath="$PROJECT_DIR$/AndrdoidHomework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lesson10exc1/lesson10exc1.iml" filepath="$PROJECT_DIR$/lesson10exc1/lesson10exc1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Andrdoid_Homework.iml" filepath="$PROJECT_DIR$/Andrdoid_Homework.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson11/lesson11.iml" filepath="$PROJECT_DIR$/lesson11/lesson11.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson12/lesson12.iml" filepath="$PROJECT_DIR$/lesson12/lesson12.iml" />
     </modules>
