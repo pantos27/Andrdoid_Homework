@@ -1,9 +1,11 @@
 package com.example.veierovioum.lesson13registration;
 
+import java.io.Serializable;
+
 /**
  * Created by Veierovioum on 28/01/2016.
  */
-public class User {
+public class User implements Serializable{
 
     String fName;
     String lName;
@@ -22,6 +24,7 @@ public class User {
         this.id = id;
         this.password = password;
     }
+
 
     @Override
     public String toString() {
@@ -76,13 +79,14 @@ public class User {
     public boolean equals(Object object) {
 
         User user;
+        //check if object is a user
         try {
             user=(User) object;
         }
         catch (Exception e){
             return false;
         }
-
+        //compare fields
         if (this.lName.equals(user.lName) && this.fName.equals(user.fName) && this.address.equals(user.address)
                 && this.email.equals(user.email) && this.id.equals(user.id) && this.password.equals(user.password)
                 && this.phoneNumber.equals(user.phoneNumber)){

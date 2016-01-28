@@ -1,5 +1,6 @@
 package com.example.veierovioum.lesson13registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<User> users;
+    private ArrayAdapter<User> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         if (users ==null){
             if (savedInstanceState!=null){
                 //get users list from saved state
-                this.users = (ArrayList<Country>) savedInstanceState.get(getString(R.string.KEY_USERS));
+                this.users = (ArrayList<User>) savedInstanceState.get(getString(R.string.KEY_USERS));
             }
             else{
                 //create and fill countires list
@@ -37,20 +40,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        adapter=new ArrayAdapter<Country>(this,android.R.layout.simple_list_item_1, users);
+        adapter=new ArrayAdapter<User>(this,android.R.layout.simple_list_item_1, users);
 
-        ListView lView=(ListView)(findViewById(R.id.listViewCountries));
+        ListView lView=(ListView)(findViewById(R.id.listViewUsers));
         lView.setAdapter(adapter);
-        //set the listener for an item on the list click
-        lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //set the listener for an item on the list long click event
+        lView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-
-                intent.putExtra(getString(R.string.KEY_CITIES), adapter.getItem(position).getCities());
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, UserDetails.class);
+                //add all user details
+                intent.putExtra(getString(R.string.KEY_FNAME), adapter.getItem(position).getfName());
+                intent.putExtra(getString(R.string.KEY_LNAME), adapter.getItem(position).getlName());
+                intent.putExtra(getString(R.string.KEY_ADDRESS), adapter.getItem(position).getAddress());
+                intent.putExtra(getString(R.string.KEY_EMAIL), adapter.getItem(position).getEmail());
+                intent.putExtra(getString(R.string.KEY_ID), adapter.getItem(position).getId());
+                intent.putExtra(getString(R.string.KEY_PHONE), adapter.getItem(position).getPhoneNumber());
 
                 startActivity(intent);
+                return true;
             }
+
         });
 
 
@@ -61,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                // TODO: 28/01/2016 add user
             }
         });
     }
 
     private void setUsers(ArrayList<User> _users) {
         _users.add(new User("Mark","Mathews","mark@pmail.com","555-4832","5 Bottle St.","06504823","drcd212"));
-        _users.add(new User("Mark","Mathews","mark@pmail.com","555-4832","5 Bottle St.","06504823","drcd212"));
+        _users.add(new User("Arthur", "Brown", "art@fire.org", "555-4050", "27 Rock St.", "32322500", "rbb2y541c"));
+        _users.add(new User("Mark", "Mathews", "mark@pmail.com", "555-4832", "5 Bottle St.", "06504823", "drcd212"));
+        _users.add(new User("Lisa", "Stanfield", "east@north.west", "555-5223", "300 Park Ave.", "0213152", "qwerty123"));
 
     }
 
@@ -93,5 +106,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //sate countries list
+        outState.putSerializable(getString(R.string.KEY_USERS),users);
+    }
 
 }

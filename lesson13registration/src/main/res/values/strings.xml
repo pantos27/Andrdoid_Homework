@@ -3,4 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="active_users">Active Users:</string>
     <string name="KEY_USERS">users key</string>
+    <string name="title_activity_user_details">UserDetails</string>
+    <string name="KEY_USERDETAILS">user details key</string>
+    <string name="KEY_FNAME">first name</string>
+    <string name="KEY_LNAME">user last name</string>
+    <string name="KEY_ADDRESS">user address</string>
+    <string name="KEY_EMAIL">user email</string>
+    <string name="KEY_ID">user ID</string>
+    <string name="KEY_PHONE">user phone</string>
 </resources>
