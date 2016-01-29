@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<User> users;
     private ArrayAdapter<User> adapter;
+    private final int RQ_UserDetails=442;
+    private final int RQ_AddUSer=224;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +52,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, UserDetails.class);
                 //add all user details
-                intent.putExtra(getString(R.string.KEY_FNAME), adapter.getItem(position).getfName());
-                intent.putExtra(getString(R.string.KEY_LNAME), adapter.getItem(position).getlName());
-                intent.putExtra(getString(R.string.KEY_ADDRESS), adapter.getItem(position).getAddress());
-                intent.putExtra(getString(R.string.KEY_EMAIL), adapter.getItem(position).getEmail());
-                intent.putExtra(getString(R.string.KEY_ID), adapter.getItem(position).getId());
-                intent.putExtra(getString(R.string.KEY_PHONE), adapter.getItem(position).getPhoneNumber());
 
-                startActivity(intent);
+                intent.putExtra(getString(R.string.KEY_USERDETAILS),adapter.getItem(position));
+                intent.putExtra(getString(R.string.KEY_POSITION), position);
+
+                startActivityForResult(intent, RQ_UserDetails);
                 return true;
             }
 
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddUser);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,4 +112,24 @@ public class MainActivity extends AppCompatActivity {
         outState.putSerializable(getString(R.string.KEY_USERS),users);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        int position=data.getIntExtra(getString(R.string.KEY_POSITION),-1);
+        // TODO: 29/01/2016 check not -1
+        switch (resultCode) {
+            case R.id.fabDelete:
+                users.remove(position);
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.fabEdit: {
+
+                break;
+            }
+
+
+        }
+
+    }
 }

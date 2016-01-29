@@ -11,4 +11,12 @@
     <string name="KEY_EMAIL">user email</string>
     <string name="KEY_ID">user ID</string>
     <string name="KEY_PHONE">user phone</string>
+    <string name="user_details">User Details:</string>
+    <string name="phone_number">Phone Number:</string>
+    <string name="full_name">Full Name:</string>
+    <string name="email">Email:</string>
+    <string name="address">Address:</string>
+    <string name="id">ID:</string>
+    <string name="KEY_POSITION">array position</string>
+    <integer name="RESULT_DELETE">2020</integer>
 </resources>
