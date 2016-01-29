@@ -19,4 +19,6 @@
     <string name="id">ID:</string>
     <string name="KEY_POSITION">array position</string>
     <integer name="RESULT_DELETE">2020</integer>
+    <string name="title_activity_edit_user">EditUser</string>
+    <string name="edit_user">Edit user:</string>
 </resources>

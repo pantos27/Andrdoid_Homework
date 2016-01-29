@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<User> adapter;
     private final int RQ_UserDetails=442;
     private final int RQ_AddUSer=224;
+    private final int RQ_EditUser=654;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode==RESULT_CANCELED) return;
 
         int position=data.getIntExtra(getString(R.string.KEY_POSITION),-1);
         // TODO: 29/01/2016 check not -1
@@ -124,8 +126,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.fabEdit: {
+                Intent editIntent = new Intent(this,EditUser.class);
+                editIntent.putExtra(getString(R.string.KEY_USERDETAILS),users.get(position));
 
+                startActivityForResult(editIntent,RQ_EditUser);
                 break;
+            }
+
+            case R.id.fabSave:{
+
             }
 
 
