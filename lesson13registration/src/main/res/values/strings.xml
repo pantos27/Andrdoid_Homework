@@ -22,4 +22,8 @@
     <string name="title_activity_edit_user">EditUser</string>
     <string name="edit_user">Edit user:</string>
     <string name="title_activity_new_user">New User</string>
+    <string name="new_user">New User</string>
+    <string name="first_name">First Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="password">Password:</string>
 </resources>

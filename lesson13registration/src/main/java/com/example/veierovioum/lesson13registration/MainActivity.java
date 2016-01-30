@@ -136,13 +136,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case R.id.fabSave:{
+                //get user data from edit activity
                 User user= (User) data.getSerializableExtra(getString(R.string.KEY_USERDETAILS));
-
+                //update array and list view
                 users.set(position,user);
                 adapter.notifyDataSetChanged();
             }
             case R.id.fabNewUser:{
-                // TODO: 30/01/2016 save new user
+                //get user data from edit activity
+                User user= (User) data.getSerializableExtra(getString(R.string.KEY_USERDETAILS));
+                //add user to arrat
+                users.add(user);
+                adapter.notifyDataSetChanged();
             }
 
         }

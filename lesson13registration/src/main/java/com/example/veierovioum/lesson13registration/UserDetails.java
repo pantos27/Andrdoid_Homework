@@ -19,24 +19,6 @@ public class UserDetails extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabDelete);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                setResult(R.integer.RESULT_DELETE,getIntent());
-//                finish();
-//            }
-//        });
-//
-//        fab = (FloatingActionButton) findViewById(R.id.fabEdit);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                setResult(R.integer.RESULT_EDIT,getIntent());
-//                finish();
-//            }
-//        });
 
         if(savedInstanceState==null){
 
