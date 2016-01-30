@@ -25,6 +25,10 @@
         <activity
             android:name=".EditUser"
             android:label="@string/title_activity_edit_user"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewUser"
+            android:label="@string/title_activity_new_user"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

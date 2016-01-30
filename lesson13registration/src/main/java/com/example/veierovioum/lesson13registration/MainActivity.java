@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                // TODO: 28/01/2016 add user
+
+                Intent intent=new Intent(MainActivity.this,NewUser.class);
+                startActivityForResult(intent,RQ_AddUSer);
             }
         });
     }
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //do nothing if no action taken
         if (resultCode==RESULT_CANCELED) return;
 
         int position=data.getIntExtra(getString(R.string.KEY_POSITION),-1);
@@ -128,15 +129,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.fabEdit: {
                 Intent editIntent = new Intent(this,EditUser.class);
                 editIntent.putExtra(getString(R.string.KEY_USERDETAILS),users.get(position));
+                editIntent.putExtra(getString(R.string.KEY_POSITION), position);
 
                 startActivityForResult(editIntent,RQ_EditUser);
                 break;
             }
 
             case R.id.fabSave:{
+                User user= (User) data.getSerializableExtra(getString(R.string.KEY_USERDETAILS));
 
+                users.set(position,user);
+                adapter.notifyDataSetChanged();
             }
-
+            case R.id.fabNewUser:{
+                // TODO: 30/01/2016 save new user
+            }
 
         }
 

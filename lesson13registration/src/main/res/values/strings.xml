@@ -21,4 +21,5 @@
     <integer name="RESULT_DELETE">2020</integer>
     <string name="title_activity_edit_user">EditUser</string>
     <string name="edit_user">Edit user:</string>
+    <string name="title_activity_new_user">New User</string>
 </resources>
