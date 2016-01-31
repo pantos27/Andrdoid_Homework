@@ -19,4 +19,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <com.pantos27.www.lesson13_custom_view.ExpandView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
