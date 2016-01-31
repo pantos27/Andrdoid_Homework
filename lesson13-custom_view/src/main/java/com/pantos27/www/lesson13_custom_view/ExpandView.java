@@ -72,5 +72,39 @@ public class ExpandView extends TextView {
         this.stateChangedListener = stateChangedListener;
     }
 
+    public void expand(){
+        if (!expanded){
+            expanded=true;
+            this.setText(firstRow+"\n"+secondRow);
+
+            if (stateChangedListener!=null){
+                stateChangedListener.onStateChanged(this);
+
+            }
+        }
+
+    }
+    public void collapse(){
+        if (expanded){
+            expanded=false;
+            this.setText(firstRow);
+
+            if (stateChangedListener!=null){
+                stateChangedListener.onStateChanged(this);
+
+            }
+        }
+    }
+
+    @Override
+    public boolean callOnClick() {
+
+        return false;
+    }
+
+    @Override
+    public boolean performClick() {
+        return this.callOnClick();
+    }
 
 }
