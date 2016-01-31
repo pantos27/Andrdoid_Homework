@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/lesson12-exe3" />
+            <option value="$PROJECT_DIR$/lesson13-custom_view" />
             <option value="$PROJECT_DIR$/lesson13registration" />
           </set>
         </option>
