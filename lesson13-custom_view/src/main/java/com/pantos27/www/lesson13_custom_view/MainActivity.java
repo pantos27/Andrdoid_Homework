@@ -35,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         ExpandView ev= (ExpandView) findViewById(R.id.expandView);
 
-        ev.setFirstRow("first row");
-        ev.setSecondRow("second row");
-        Log.d(ExpandView.TAG, "onCreate: before expand state listener");
+         Log.d(ExpandView.TAG, "onCreate: before expand state listener");
 
         ev.setStateChangedListener(new StateChangedListener() {
             @Override

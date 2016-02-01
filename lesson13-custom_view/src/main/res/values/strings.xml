@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Lesson13-custom_view</string>
+    <string name="firstRow">some first row text</string>
+    <string name="secondRow">oh look! it\'s the second row\'s text</string>
 </resources>

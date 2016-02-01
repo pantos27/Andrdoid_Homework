@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -23,7 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/expandView"
-        android:text="123"
+        app:firstRow="@string/firstRow"
+        app:secondRow="@string/secondRow"
+        app:expanded="true"
         android:textSize="27sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

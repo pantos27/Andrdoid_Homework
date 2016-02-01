@@ -1,1 +1,1 @@
-include ':lesson12-exe3', ':lesson13registration', ':lesson13-custom_view'
+include ':lesson13-custom_view', ':lesson12-exe3'

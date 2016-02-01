@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandView">
+        <attr name="expanded" format="boolean"/>
+        <attr name="firstRow" format="string"/>
+        <attr name="secondRow" format="string"/>
+
+    </declare-styleable>
+    <declare-styleable name="MultiPurposeButton">
 
     </declare-styleable>
 </resources>
