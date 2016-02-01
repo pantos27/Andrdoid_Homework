@@ -2,6 +2,7 @@ package com.pantos27.www.lesson13_custom_view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -59,6 +60,11 @@ public class ExpandView extends TextView implements View.OnClickListener{
         super.setOnClickListener(this);
     }
 
+    private void init(AttributeSet attrs){
+        init();
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandView);
+
+    }
 
     public CharSequence getSecondRow() {
         return secondRow;
