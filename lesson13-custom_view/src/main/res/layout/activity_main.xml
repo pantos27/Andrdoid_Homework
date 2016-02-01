@@ -22,7 +22,11 @@
     <com.pantos27.www.lesson13_custom_view.ExpandView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view"
+        android:id="@+id/expandView"
+        android:text="123"
+        android:textSize="27sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
