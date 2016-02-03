@@ -1,1 +1,1 @@
-include ':lesson13-custom_view', ':lesson12-exe3', ':lesson14-painter'
+include ':lesson14-painter'
