@@ -61,19 +61,24 @@ public class MyPainter extends View implements View.OnTouchListener {
 
     public MyPainter(Context context) {
         super(context);
+        init();
     }
 
     public MyPainter(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(attrs);
     }
 
     public MyPainter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(attrs);
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MyPainter(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(attrs);
     }
 
     void init(){
@@ -82,11 +87,11 @@ public class MyPainter extends View implements View.OnTouchListener {
     }
     void init(AttributeSet attr){
         init();
-        TypedArray array = getContext().obtainStyledAttributes(attr, R.styleable.MyPainter);
+//        TypedArray array = getContext().obtainStyledAttributes(attr, R.styleable.MyPainter);
         //init class members from xml
 
 
-        array.recycle();
+//        array.recycle();
     }
 
     public void setSelectedShape(Shapes selectedShape) {
@@ -120,6 +125,8 @@ public class MyPainter extends View implements View.OnTouchListener {
         Point currentPoint=new Point(event.getX(),event.getY());
         Paint paint=new Paint();
         paint.setColor(selectedColor.getValue());
+        paint.setStrokeWidth(5);
+        paint.setStyle(Paint.Style.STROKE);
 
         switch (action){
 
@@ -156,6 +163,9 @@ public class MyPainter extends View implements View.OnTouchListener {
                 tempShape=null;
                 break;
         }
+
+        this.invalidate();
+
         return true;
     }
 
@@ -166,17 +176,22 @@ public class MyPainter extends View implements View.OnTouchListener {
     public ArrayList<Shape> clearAllShapes(){
         ArrayList<Shape> returnArray= (ArrayList<Shape>) shapes.clone();
         shapes.clear();
+        this.invalidate();
         return returnArray;
     }
 
     public Shape removeLastShape() {
-        if(shapes.size()>0)
-            return shapes.remove(shapes.size()-1);
+        if(shapes.size()>0) {
+            Shape shape =shapes.remove(shapes.size() - 1);
+            this.invalidate();
+            return shape;
+        }
         else return null;
     }
 
     public void addShape(Shape newShape){
         shapes.add(newShape);
+        this.invalidate();
     }
-
+// TODO: 04/02/2016 save state
 }

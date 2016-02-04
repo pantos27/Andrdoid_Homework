@@ -35,7 +35,7 @@ public class PainterActivity extends AppCompatActivity {
             }
         });
 
-        fab = (FloatingActionButton) findViewById(R.id.fabClrear);
+        fab = (FloatingActionButton) findViewById(R.id.fabUndo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
