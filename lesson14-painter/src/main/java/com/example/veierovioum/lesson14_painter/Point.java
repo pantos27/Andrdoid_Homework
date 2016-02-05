@@ -4,8 +4,8 @@ package com.example.veierovioum.lesson14_painter;
  * Created by Veierovioum on 02/02/2016.
  */
 public class Point {
-    float x;
-    float y;
+    private float x;
+    private float y;
 
     /**
      * @return the x

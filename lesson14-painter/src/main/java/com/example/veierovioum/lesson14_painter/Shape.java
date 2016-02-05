@@ -12,7 +12,9 @@ public abstract class Shape {
     Point startPoint;
     Point endPoint;
 
-    public Shape(Paint paint) {
+    public Shape(Point start,Point end,Paint paint) {
+        this.startPoint=start;
+        this.endPoint=end;
         this.paint = paint;
     }
 

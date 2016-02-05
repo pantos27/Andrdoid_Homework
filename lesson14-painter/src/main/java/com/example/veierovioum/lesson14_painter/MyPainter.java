@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class MyPainter extends View implements View.OnTouchListener {
 
-    private static final String TAG = "MyPainter";
+    static final String TAG = "MyPainter";
     ArrayList<Shape> shapes=new ArrayList<>();
     Shape tempShape;
     Point startPoint;
@@ -119,7 +119,6 @@ public class MyPainter extends View implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // TODO: 03/02/2016 catch touch event
 
         int action=event.getActionMasked();
         Point currentPoint=new Point(event.getX(),event.getY());
@@ -139,19 +138,20 @@ public class MyPainter extends View implements View.OnTouchListener {
                 Log.d(TAG, "onTouch: move start");
                 switch (selectedShape) {
                     case Circle:
-// TODO: 04/02/2016 add circle
+                        tempShape=new Circle(startPoint,currentPoint,paint);
                         break;
                     case Rectangle:
                         tempShape= new Rectangle(startPoint,currentPoint,paint);
                         break;
                     case Line:
-                        // TODO: 04/02/2016 add line
+                        tempShape=new Line(startPoint,currentPoint,paint);
                         break;
                     case Path:
                         if (tempShape==null)
-                        //new path
-
-                        //todo:add to path
+                            tempShape=new Path(startPoint,currentPoint,paint);
+                        else
+                            Log.d(TAG, "onTouch: Path "+((Path)tempShape));
+                            ((Path)tempShape).addToPath(currentPoint);
                         break;
                 }
                 Log.d(TAG, "onTouch: move end");
