@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -80,8 +81,12 @@ public class PainterActivity extends AppCompatActivity implements AdapterView.On
         if (parent.getId()==R.id.spinnerColor)
         {
             SelectedColor color= (SelectedColor) parent.getItemAtPosition(position);
+            //sets painter color
             myPainter.setSelectedColor(color);
-
+            //changes text color
+            if (view != null) {
+                ((TextView)view).setTextColor(color.getValue());
+            }
         }
 
         if (parent.getId()==R.id.spinnerShape){

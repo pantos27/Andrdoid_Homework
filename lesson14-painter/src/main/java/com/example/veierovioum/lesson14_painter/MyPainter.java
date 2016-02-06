@@ -32,7 +32,7 @@ public class MyPainter extends View implements View.OnTouchListener {
      * a collection of possible shapes to draw
      */
     public enum Shapes{
-        Rectangle,Circle,Line,Path
+        Rectangle,Circle,Triangle,Line,Path,
     }
 
     public MyPainter(Context context) {
@@ -63,11 +63,7 @@ public class MyPainter extends View implements View.OnTouchListener {
     }
     private void init(AttributeSet attr){
         init();
-//        TypedArray array = getContext().obtainStyledAttributes(attr, R.styleable.MyPainter);
-        //init class members from xml
 
-
-//        array.recycle();
     }
 
     public void setSelectedShape(Shapes selectedShape) {
@@ -118,6 +114,9 @@ public class MyPainter extends View implements View.OnTouchListener {
                         break;
                     case Rectangle:
                         tempShape= new Rectangle(startPoint,currentPoint,paint);
+                        break;
+                    case Triangle:
+                        tempShape=new Triangle(startPoint,currentPoint,paint);
                         break;
                     case Line:
                         tempShape=new Line(startPoint,currentPoint,paint);
