@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,48 +17,22 @@ import android.view.View;
 import java.util.ArrayList;
 
 /**
- * Created by aattar on 03/02/2016.
+ * Custom Painter View
  */
 public class MyPainter extends View implements View.OnTouchListener {
 
     static final String TAG = "MyPainter";
-    ArrayList<Shape> shapes=new ArrayList<>();
-    Shape tempShape;
-    Point startPoint;
-    public Shapes selectedShape=Shapes.Rectangle;
-    public SelectedColor selectedColor=SelectedColor.BLACK;
-    //shape types
-    static final int RECTANGLE=100;
+    private ArrayList<Shape> shapes=new ArrayList<>();
+    private Shape tempShape;
+    private Point startPoint;
+    private Shapes selectedShape=Shapes.Rectangle;
+    private SelectedColor selectedColor=SelectedColor.BLACK;
 
-
-//    //colors list
-//    static final int BLUE= Color.BLUE;
-//    static final int BLACK= Color.BLACK;
-//    static final int GRAY= Color.GRAY;
-//    static final int GREEN= Color.GREEN;
-//    static final int RED= Color.RED;
-//    static final int CYAN= Color.CYAN;
-//    static final int YELLOW= Color.YELLOW;
-
-
-    public enum ShapeColor{
-        BLUE ("Blue",Color.BLUE),
-        BLACK ("Black",Color.BLACK);
-
-        private  int value;
-        private  String name;
-        ShapeColor(String _name,int color) {
-            this.name=_name;
-            this.value=color;
-        }
-
-        public int getValue(){return value;}
-        public String getName(){return name;}
-
-    }
-
+    /**
+     * a collection of possible shapes to draw
+     */
     public enum Shapes{
-        Rectangle,Circle,Line,Path;
+        Rectangle,Circle,Line,Path
     }
 
     public MyPainter(Context context) {
@@ -81,11 +57,11 @@ public class MyPainter extends View implements View.OnTouchListener {
         init(attrs);
     }
 
-    void init(){
+    private void init(){
         super.setOnTouchListener(this);
 
     }
-    void init(AttributeSet attr){
+    private void init(AttributeSet attr){
         init();
 //        TypedArray array = getContext().obtainStyledAttributes(attr, R.styleable.MyPainter);
         //init class members from xml
@@ -150,7 +126,6 @@ public class MyPainter extends View implements View.OnTouchListener {
                         if (tempShape==null)
                             tempShape=new Path(startPoint,currentPoint,paint);
                         else
-                            Log.d(TAG, "onTouch: Path "+((Path)tempShape));
                             ((Path)tempShape).addToPath(currentPoint);
                         break;
                 }
@@ -193,5 +168,62 @@ public class MyPainter extends View implements View.OnTouchListener {
         shapes.add(newShape);
         this.invalidate();
     }
-// TODO: 04/02/2016 save state
+
+    public void restoreShapes(ArrayList<Shape> _shapes){
+        if (_shapes != null) {
+            this.shapes=_shapes;
+            invalidate();
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        SaveState ss= (SaveState) state;
+
+        this.shapes=ss.shapes;
+
+        super.onRestoreInstanceState(ss);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable p= super.onSaveInstanceState();
+        SaveState ss=new SaveState(p);
+
+        ss.shapes=this.shapes;
+
+        return ss;
+    }
+
+    private static class SaveState extends BaseSavedState{
+        ArrayList<Shape> shapes;
+
+        public SaveState(Parcel source) {
+            super(source);
+            shapes=new ArrayList<>();
+            shapes=source.readArrayList(shapes.getClass().getClassLoader());
+        }
+
+        public SaveState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeList(shapes);
+        }
+
+        public static final Parcelable.Creator<SaveState> CREATOR =new Creator<SaveState>() {
+            @Override
+            public SaveState createFromParcel(Parcel source) {
+                return new SaveState(source);
+            }
+
+            @Override
+            public SaveState[] newArray(int size) {
+                return new SaveState[size];
+            }
+        };
+    }
 }

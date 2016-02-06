@@ -28,10 +28,14 @@ public class PainterActivity extends AppCompatActivity implements AdapterView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 04/02/2016 undo clear
-                myPainter.clearAllShapes();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Undo Clear", null).show();
+                final ArrayList<Shape> clearedShapes=myPainter.clearAllShapes();
+                Snackbar.make(view, "Shapes cleared", Snackbar.LENGTH_LONG)
+                        .setAction("Undo Clear", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                myPainter.restoreShapes(clearedShapes);
+                            }
+                        }).show();
             }
         });
 
@@ -39,10 +43,17 @@ public class PainterActivity extends AppCompatActivity implements AdapterView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 05/02/2016 undo remove shape
-                myPainter.removeLastShape();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Restore Shape", null).show();
+                //remove last added shape and temporarily save it
+                final Shape removedShape=myPainter.removeLastShape();
+                Snackbar.make(view, "Last shaped removed", Snackbar.LENGTH_LONG)
+                        .setAction("Restore Shape", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (removedShape != null) {
+                                    myPainter.addShape(removedShape);
+                                }
+                            }
+                        }).show();
             }
         });
 
@@ -69,14 +80,14 @@ public class PainterActivity extends AppCompatActivity implements AdapterView.On
         if (parent.getId()==R.id.spinnerColor)
         {
             SelectedColor color= (SelectedColor) parent.getItemAtPosition(position);
-            myPainter.selectedColor=color;
+            myPainter.setSelectedColor(color);
 
         }
 
         if (parent.getId()==R.id.spinnerShape){
             MyPainter.Shapes shape= (MyPainter.Shapes) parent.getItemAtPosition(position);
 
-            myPainter.selectedShape= shape;
+            myPainter.setSelectedShape(shape);
 
         }
     }
