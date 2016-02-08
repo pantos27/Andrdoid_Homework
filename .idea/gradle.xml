@@ -10,7 +10,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/lesson10exc1" />
             <option value="$PROJECT_DIR$/lesson14-painter" />
+            <option value="$PROJECT_DIR$/lesson15-scrolls" />
+            <option value="$PROJECT_DIR$/lesson16-balls" />
           </set>
         </option>
       </GradleProjectSettings>
