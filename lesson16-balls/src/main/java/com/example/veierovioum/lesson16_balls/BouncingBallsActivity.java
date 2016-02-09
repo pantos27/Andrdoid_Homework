@@ -140,6 +140,8 @@ public class BouncingBallsActivity extends AppCompatActivity {
                 else selectedMovement=mvmnt1;
             }
         });
+
+        StartMovement();
     }
 
     @Override
@@ -226,6 +228,6 @@ public class BouncingBallsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        StartMovement();
+        //StartMovement();
     }
 }
