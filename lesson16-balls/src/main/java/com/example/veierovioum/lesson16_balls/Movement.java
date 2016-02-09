@@ -50,8 +50,12 @@ public class Movement implements Runnable{
             if (checkOverlap(_x,_y))
             {
                 Log.d(TAG, "changePostion: collision");
+                //go to opposite direction
+//                vectorX=-1*_x;
+//                vectorY=-1*_y;
                 calcNewVector();
                 changePostion(vectorX,vectorY);
+                return;
             }
             //set new location
             handler.postDelayed(new Runnable() {
@@ -64,7 +68,7 @@ public class Movement implements Runnable{
                     changePostion(_x,_y);
                 }
 
-            }, (6-velocity));
+            }, 20);
 
 
 
@@ -72,12 +76,9 @@ public class Movement implements Runnable{
         else
         {
             //out of bounds, change direction
-            Log.d(TAG, "changePostion: out of bounds.\nx:" + thisView.getX() + " y:" + thisView.getY() +" Vx "+_x+" Vy "+_y);
+            Log.d(TAG, "changePostion: out of bounds");
             calcNewVector();
             changePostion(vectorX, vectorY);
-
-//            Log.d(TAG, "changePostion: out of bounds. Vx:"+_x+" Vy:"+_y);
-
         }
 
     }
@@ -86,15 +87,7 @@ public class Movement implements Runnable{
         View parent = (View) thisView.getParent();
         int parenMaxWidth= parent.getWidth();
         int parentMaxHeight=parent.getHeight();
-        //Log.d(TAG, "checkOutOfBounds: "+parenMaxWidth+" "+parentMaxHeight);
-        float xMaxWidth=thisView.getX()+ thisView.getWidth()+newX;
-        float xMinWidth=thisView.getX()+newX;
-        float yMax=thisView.getY()+ thisView.getHeight()+newY;
-        float yMin=thisView.getY()+newY;
-//        Log.d(TAG, "checkOutOfBounds: xMaxWidth "+xMaxWidth);
-//        Log.d(TAG, "checkOutOfBounds: xmin: "+xMinWidth);
-//        Log.d(TAG, "checkOutOfBounds: yMaxWidth "+yMax);
-//        Log.d(TAG, "checkOutOfBounds: ymin "+yMin);
+
         //check X movement
         if ((thisView.getX()+newX)<0 || (thisView.getX()+ thisView.getWidth()+newX)>parenMaxWidth)
             return false;
@@ -138,24 +131,14 @@ public class Movement implements Runnable{
     public void run() {
         changePostion(vectorX, vectorY);
 
-//        while (running) {
-//            //  Point nextMove=calcNextStep();
-//
-////                try {
-////                    Thread.sleep((6-velocity)*5);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                    Log.e(TAG, "run: sleep error", e);
-////                }
-//        }
     }
 
     void calcNewVector(){
         //Log.d(TAG, "calcNewVector: "+thisView.getId());
         Random rnd=new Random();
         this.angel=rnd.nextInt(360);
-        this.vectorX= (float) (Math.cos((this.angel)));
-        this.vectorY= (float) (Math.sin((this.angel)));
+        this.vectorX= (float) (velocity*Math.cos((this.angel)));
+        this.vectorY= (float) (velocity*Math.sin((this.angel)));
 //        this.vectorX= (float) (10- rnd.nextInt(20));
 //        this.vectorY= (float)(10- rnd.nextInt(20));
 

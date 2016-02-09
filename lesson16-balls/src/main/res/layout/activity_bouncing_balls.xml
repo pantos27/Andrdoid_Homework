@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
+            android:keepScreenOn="true"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
             <ImageView

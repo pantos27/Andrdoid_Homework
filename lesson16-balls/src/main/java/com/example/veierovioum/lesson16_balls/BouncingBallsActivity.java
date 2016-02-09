@@ -93,7 +93,7 @@ public class BouncingBallsActivity extends AppCompatActivity {
     Movement mvmnt1;
     Movement mvmnt2;
     Movement selectedMovement;
-    int maxVelocity=5;
+    int maxVelocity=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
