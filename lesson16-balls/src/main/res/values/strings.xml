@@ -5,4 +5,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="faster">Faster</string>
     <string name="slower">Slower</string>
+    <string name="start">Start</string>
+    <string name="on">On</string>
 </resources>

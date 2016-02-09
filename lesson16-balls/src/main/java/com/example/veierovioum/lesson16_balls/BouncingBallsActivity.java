@@ -5,8 +5,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -30,6 +35,7 @@ public class BouncingBallsActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+    private static final String TAG = "BouncingBalls";
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -83,16 +89,21 @@ public class BouncingBallsActivity extends AppCompatActivity {
         }
     };
 
+    private final Handler mMovementHandler=new Handler();
+    Movement mvmnt1;
+    Movement mvmnt2;
+    Movement selectedMovement;
+    int maxVelocity=5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_bouncing_balls);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
-
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +117,29 @@ public class BouncingBallsActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.switch1).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.fasterButton).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.slowerButton).setOnTouchListener(mDelayHideTouchListener);
+
+
+        ImageView img1= (ImageView) findViewById(R.id.ball1);
+        ImageView img2= (ImageView) findViewById(R.id.ball2);
+
+        mvmnt1=new Movement(img1,img2,mMovementHandler);
+        mvmnt2=new Movement(img2,img1,mMovementHandler);
+        selectedMovement=mvmnt1;
+
+        Switch sw= (Switch) findViewById(R.id.switch1);
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d(TAG, "onCheckedChanged: ");
+                if (isChecked){
+                    selectedMovement=mvmnt2;
+                }
+                else selectedMovement=mvmnt1;
+            }
+        });
     }
 
     @Override
@@ -159,5 +193,39 @@ public class BouncingBallsActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void StartMovement(){
+
+
+        Thread moveThread1=new Thread(mvmnt1);
+        Thread moveThread2=new Thread(mvmnt2);
+
+        moveThread1.start();
+        moveThread2.start();
+
+        Log.d(TAG, "StartMovement: ");
+    }
+    public void onSpeedChanged(View view){
+        TextView tv= (TextView) findViewById(R.id.textView);
+        int velocity=Integer.parseInt(tv.getText().toString());
+
+
+        if (view.getId()==R.id.slowerButton)
+        {
+            if (velocity-1>0) velocity--;
+        }
+        else{
+            if (velocity+1<=maxVelocity) velocity++;
+        }
+        tv.setText(String.valueOf(velocity));
+        selectedMovement.setVelocity(velocity);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+        StartMovement();
     }
 }

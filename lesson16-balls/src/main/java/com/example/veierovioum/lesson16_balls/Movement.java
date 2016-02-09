@@ -1,42 +1,57 @@
 package com.example.veierovioum.lesson16_balls;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+
+import java.util.Random;
 
 /**
  * Created by Veierovioum on 08/02/2016.
  */
 public class Movement implements Runnable{
+    private static final String TAG = "BouncingBalls";
     View thisView;
     View otherView;
-    private int vector;
-    private int speed;
+    private float vectorX;
+    private float vectorY;
+    private int velocity =5;
     Handler handler;
-
+    private boolean running=true;
+    private int angel;
 
 
     public Movement(View thisView, View otherView, Handler handler) {
         this.thisView = thisView;
         this.otherView = otherView;
         this.handler = handler;
+
+        calcNewVector();
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
     }
 
-    private void changePostion(final int _x, final int _y){
-        //check plane going out of boinds
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    private void changePostion(final float _x, final float _y){
+        //check if going out of bounds
         if (checkOutOfBounds(_x, _y))
         {
-            //check planes overlapping
+            //check  overlapping with other view
             if (checkOverlap(_x,_y))
             {
-                // TODO: 08/02/2016 collision, change direction
-                return;
+                // TODO: 08/02/2016 collision
+                calcNewVector();
             }
             //set new location
-            // TODO: 08/02/2016 set new location on ui thread
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -44,18 +59,16 @@ public class Movement implements Runnable{
                     thisView.setY(thisView.getY() + _y);
                 }
             });
-            //thisView.setX(thisView.getX()+_x);
-            //thisView.setY(thisView.getY()+_y);
-
         }
         else
         {
-            // TODO: 08/02/2016 out of bounds change direction
+            //out of bounds, change direction
+            calcNewVector();
         }
 
     }
 
-    private boolean checkOutOfBounds(int newX,int newY){
+    private boolean checkOutOfBounds(float newX,float newY){
         View parent = (View) thisView.getParent();
         int parenMaxWidth= parent.getWidth();
         int parentMaxHeight=parent.getHeight();
@@ -70,7 +83,7 @@ public class Movement implements Runnable{
         return true;
     }
 
-    private boolean checkOverlap(int newX,int newY){
+    private boolean checkOverlap(float newX,float newY){
         //check the four point of the view for overlapping
         if (checkPoint(thisView.getX()+newX, thisView.getY()+newY, otherView)
                 || checkPoint(thisView.getX()+ thisView.getWidth()+newX, thisView.getY()+newY, otherView)
@@ -100,11 +113,31 @@ public class Movement implements Runnable{
 
     @Override
     public void run() {
+        while (running){
+          //  Point nextMove=calcNextStep();
+            changePostion(vectorX, vectorY);
+
+            try {
+                Thread.sleep(5*(6- velocity));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Log.e(TAG, "run: sleep error",e );
+            }
+        }
+    }
+
+    void calcNewVector(){
+        Random rnd=new Random();
+        this.angel=180- rnd.nextInt(360);
+        this.vectorX= (float) (Math.cos((this.angel)));
+        this.vectorY= (float) (Math.sin((this.angel)));
 
     }
 
-    int calcNewVector(){
-        return Math.atan2();
-        Math.atan()
+    Point calcNextStep(){
+
+        Point next=new Point(thisView.getX()+this.vectorX,thisView.getY()+this.vectorY);
+        return next;
+
     }
 }

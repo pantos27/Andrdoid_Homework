@@ -17,15 +17,18 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="top|start"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:src="@drawable/soccerball"
             android:id="@+id/ball1" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="top|end
-            "
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:src="@drawable/poloball"
             android:id="@+id/ball2" />
     </RelativeLayout>
@@ -75,31 +78,39 @@
                 <!--android:orientation="horizontal"-->
                 <!--style="@style/AppTheme"-->
                 <!--android:id="@+id/numberPicker" />-->
+
             <Space
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="0dp" />
-
             <Button
-                android:id="@+id/dummy_button"
+                android:id="@+id/fasterButton"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/faster" />
+                android:textSize="27sp"
+                android:onClick="onSpeedChanged"
+                android:text="+" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?metaButtonBarButtonStyle"
+                android:textStyle="bold"
+                android:ems="1"
                 android:textColor="#FFF"
-                android:text="3"
+                android:text="5"
                 android:id="@+id/textView" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?metaButtonBarButtonStyle"
-                android:text="@string/slower"
-                android:id="@+id/button" />
+                android:text="-"
+                android:onClick="onSpeedChanged"
+                android:textSize="27sp"
+                android:id="@+id/slowerButton" />
+
+
+
 
         </LinearLayout>
     </FrameLayout>
