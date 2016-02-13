@@ -1,8 +1,11 @@
 package com.example.veierovioum.lesson16_balls;
 
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewParent;
 
 import java.util.Random;
 
@@ -13,6 +16,9 @@ public class Movement implements Runnable{
     private static final String TAG = "BouncingBalls";
     View thisView;
     View otherView;
+    RectF rect1;
+    RectF rect2;
+    RectF rectParent;
     private float vectorX;
     private float vectorY;
     private int velocity =5;
@@ -42,12 +48,14 @@ public class Movement implements Runnable{
         this.running = running;
     }
 
-    private  void changePostion(final float _x, final float _y){
+    private synchronized void changePostion(final float _x, final float _y){
+        //update rectangulars
+        updateRects();
         //check if going out of bounds
-        if (checkOutOfBounds(_x, _y))
+        if (checkOutOfBoundsRect(_x, _y))
         {
             //check  overlapping with other view
-            if (checkOverlap(_x,_y))
+            if (checkOverlapRect(_x, _y))
             {
                 Log.d(TAG, "changePostion: collision");
                 //go to opposite direction
@@ -65,10 +73,12 @@ public class Movement implements Runnable{
                     thisView.setY(thisView.getY() + _y);
                     thisView.setRotation(thisView.getRotation() + velocity);
                     //Log.d(TAG,this.toString()+ " postion changed x: "+thisView.getX()+" y: "+thisView.getY());
-                    changePostion(_x,_y);
+                    if(isRunning())
+                        //continue in the same vector
+                        changePostion(_x,_y);
                 }
 
-            }, 20);
+            }, 5);
 
 
 
@@ -83,48 +93,26 @@ public class Movement implements Runnable{
 
     }
 
-    private boolean checkOutOfBounds(float newX,float newY){
-        View parent = (View) thisView.getParent();
-        int parenMaxWidth= parent.getWidth();
-        int parentMaxHeight=parent.getHeight();
+    private void updateRects() {
 
-        //check X movement
-        if ((thisView.getX()+newX)<0 || (thisView.getX()+ thisView.getWidth()+newX)>parenMaxWidth)
-            return false;
-        //check Y movement
-        if ((thisView.getY()+newY)<0 || (thisView.getY()+ thisView.getHeight()+newY)>parentMaxHeight)
-            return false;
-
-        // all good
-        return true;
+        this.rect1=getRecF(this.thisView);
+        this.rect2=getRecF(this.otherView);
+        this.rectParent=getRecF((View)this.thisView.getParent());
     }
 
-    private boolean checkOverlap(float newX,float newY){
-        //check the four point of the view for overlapping
-        if (checkPoint(thisView.getX()+newX, thisView.getY()+newY, otherView)
-                || checkPoint(thisView.getX()+ thisView.getWidth()+newX, thisView.getY()+newY, otherView)
-                || checkPoint(thisView.getX()+newX, thisView.getY()+ thisView.getHeight()+newY, otherView)
-                || checkPoint(thisView.getX()+ thisView.getWidth()+newX, thisView.getY()+ thisView.getHeight()+newY, otherView))
 
-            return true;
+    private boolean checkOutOfBoundsRect(float _x,float _y)
+    {
+        //Log.d(TAG, "checkOutOfBoundsRect: ");
+        rect1.offset(_x,_y);
 
-        return false;
+        return rectParent.contains(rect1);
     }
 
-    /**
-     * checks a certain point if overlaps given view
-     * @param x
-     * @param y
-     * @param v
-     * @return
-     */
-    private boolean checkPoint(float x, float y,View v){
-
-        if (x>=v.getX() && x<=v.getX()+v.getWidth()
-                && y>=v.getY() && y<=v.getY()+v.getHeight())
-            return true;
-
-        return false;
+    private boolean checkOverlapRect(float _x,float _y){
+        //Log.d(TAG, "checkOverlapRect: ");
+        rect1.offset(_x, _y);
+        return rect2.intersect(rect1);
     }
 
     @Override
@@ -134,7 +122,7 @@ public class Movement implements Runnable{
     }
 
     void calcNewVector(){
-        //Log.d(TAG, "calcNewVector: "+thisView.getId());
+        Log.d(TAG, "calcNewVector: "+thisView.getId());
         Random rnd=new Random();
         this.angel=rnd.nextInt(360);
         this.vectorX= (float) (velocity*Math.cos((this.angel)));
@@ -144,10 +132,9 @@ public class Movement implements Runnable{
 
     }
 
-    Point calcNextStep(){
 
-        Point next=new Point(thisView.getX()+this.vectorX,thisView.getY()+this.vectorY);
-        return next;
+    private RectF getRecF(View v){
 
+        return new RectF(v.getX(),v.getY(),v.getX()+v.getWidth(),v.getY()+v.getHeight());
     }
 }

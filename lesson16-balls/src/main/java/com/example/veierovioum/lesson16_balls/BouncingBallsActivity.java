@@ -134,20 +134,18 @@ public class BouncingBallsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.d(TAG, "onCheckedChanged: ");
-                if (isChecked){
-                    selectedMovement=mvmnt2;
-                }
-                else selectedMovement=mvmnt1;
+                if (isChecked) {
+                    selectedMovement = mvmnt2;
+                } else selectedMovement = mvmnt1;
             }
         });
 
-        StartMovement();
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
+        Log.d(TAG, "onPostCreate: ");
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
@@ -203,12 +201,19 @@ public class BouncingBallsActivity extends AppCompatActivity {
         Thread moveThread1=new Thread(mvmnt1);
         Thread moveThread2=new Thread(mvmnt2);
 
+        mvmnt1.setRunning(true);
+        mvmnt2.setRunning(true);
+
+        moveThread1.setDaemon(true);
+        moveThread2.setDaemon(true);
+
         moveThread1.start();
         moveThread2.start();
 
         Log.d(TAG, "StartMovement: ");
     }
     public void onSpeedChanged(View view){
+        Log.d(TAG, "onSpeedChanged: ");
         TextView tv= (TextView) findViewById(R.id.textView);
         int velocity=Integer.parseInt(tv.getText().toString());
 
@@ -228,6 +233,20 @@ public class BouncingBallsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        //StartMovement();
+        StartMovement();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+        StopMovement();
+
+    }
+
+    private void StopMovement() {
+        Log.d(TAG, "StopMovement: ");
+        mvmnt1.setRunning(false);
+        mvmnt2.setRunning(false);
     }
 }
