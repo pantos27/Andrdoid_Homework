@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,values[0]+ " File(s) downloaded", Toast.LENGTH_SHORT).show();
                 }
 
-
+                @Override
+                protected void onCancelled(Boolean aBoolean) {
+                    super.onCancelled(aBoolean);
+                }
             };
 
             if (v.getId()==R.id.buttonParallel){
