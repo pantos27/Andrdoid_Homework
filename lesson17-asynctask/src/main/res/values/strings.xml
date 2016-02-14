@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">lesson17-asynctask</string>
+    <array name="urls">
+        <item>123</item>
+        <item>321</item>
+        <item>333</item>
+        <item>159</item>
+        <item>987</item>
+    </array>
+</resources>
