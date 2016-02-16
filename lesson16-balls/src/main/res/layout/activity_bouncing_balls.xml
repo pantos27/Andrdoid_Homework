@@ -21,6 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:src="@drawable/soccerball"
+            android:saveEnabled="false"
             android:id="@+id/ball1" />
 
         <ImageView
@@ -29,6 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:saveEnabled="false"
             android:src="@drawable/poloball"
             android:id="@+id/ball2" />
     </RelativeLayout>

@@ -112,7 +112,7 @@ public class Movement implements Runnable{
     private boolean checkOverlapRect(float _x,float _y){
         //Log.d(TAG, "checkOverlapRect: ");
         rect1.offset(_x, _y);
-        return rect2.intersect(rect1);
+        return RectF.intersects(rect1,rect2);
     }
 
     @Override
