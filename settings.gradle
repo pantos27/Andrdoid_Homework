@@ -1,1 +1,1 @@
-include ':lesson15-scrolls', ':lesson16-balls', ':lesson16-screenshot', ':lesson17-asynctask'
+include ':lesson12', ':lesson16-balls',':lesson19-customadapter'

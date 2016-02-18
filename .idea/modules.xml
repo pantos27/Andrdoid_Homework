@@ -3,12 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Andrdoid_Homework.iml" filepath="$PROJECT_DIR$/Andrdoid_Homework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Andrdoid_Homework_Reloaded.iml" filepath="$PROJECT_DIR$/Andrdoid_Homework_Reloaded.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lesson15-scrolls/lesson15-scrolls.iml" filepath="$PROJECT_DIR$/lesson15-scrolls/lesson15-scrolls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson12/lesson12.iml" filepath="$PROJECT_DIR$/lesson12/lesson12.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson16-balls/lesson16-balls.iml" filepath="$PROJECT_DIR$/lesson16-balls/lesson16-balls.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson16-balls/lesson16-balls.iml" filepath="$PROJECT_DIR$/lesson16-balls/lesson16-balls.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lesson16-screenshot/lesson16-screenshot.iml" filepath="$PROJECT_DIR$/lesson16-screenshot/lesson16-screenshot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lesson17-asynctask/lesson17-asynctask.iml" filepath="$PROJECT_DIR$/lesson17-asynctask/lesson17-asynctask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson19-customadapter/lesson19-customadapter.iml" filepath="$PROJECT_DIR$/lesson19-customadapter/lesson19-customadapter.iml" />
     </modules>
   </component>
 </project>
