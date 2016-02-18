@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">lesson16-screenshot</string>
     <array name="welcomeMessage">
-        <item >Welcome</item>
+        <item>Welcome</item>
         <item>To My</item>
         <item>App!</item>
     </array>

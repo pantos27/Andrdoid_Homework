@@ -1,5 +1,6 @@
 package com.pantos27.www.lesson16_screenshot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private Runnable splashhRunnable=new Runnable() {
         @Override
         public void run() {
-            Log.d("TAGGG", "run: "+i+" "+arr[i]);
+            Log.d("TAGGG", "run: " + i + " " + arr[i]);
             tv.setText(tv.getText() + "\n" +arr[i]);
             if (i++<arr.length-1){
                 mRun();
             }
+            else
+                tv.postDelayed(nextActRunnable,4000);
+
 
         }
     };
@@ -56,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private Runnable nextActRunnable=new Runnable() {
         @Override
         public void run() {
-
+            Intent intent=new Intent(MainActivity.this,SecondActivity.class);
+            startActivity(intent);
         }
     };
 
