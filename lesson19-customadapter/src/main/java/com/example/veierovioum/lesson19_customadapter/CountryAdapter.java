@@ -1,10 +1,17 @@
 package com.example.veierovioum.lesson19_customadapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -13,8 +20,11 @@ import java.util.ArrayList;
  */
     public class CountryAdapter implements ExpandableListAdapter {
 
+    private static final String TAG = "expandAdapter";
     Context context;
+    CitiesFragment fragment;
     ArrayList<Country> countries;
+    private static final int fragmentContainerID=000056;
 
     public CountryAdapter(Context context, ArrayList<Country> countries) {
         this.context=context;
@@ -69,20 +79,34 @@ import java.util.ArrayList;
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-        if (convertView != null) {
-
+        TextView textView;
+        if (convertView == null) {
+             textView= (TextView) LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
         }
         else
-        {
+            textView=(TextView) convertView;
 
-        }
+        textView.setText(countries.get(groupPosition).toString());
 
-        return convertView;
+        return textView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+
+        if (convertView==null || fragment==null){
+            convertView=new FrameLayout(context);
+            convertView.setId(fragmentContainerID);
+            convertView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT));
+            fragment=new CitiesFragment();
+            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction()
+                    .add(convertView.getId(),fragment,"citiesFrag").commit();
+
+            Log.d(TAG, "getChildView: fragment added");
+        }
+
+        fragment.setCities(countries.get(groupPosition).getCities());
+        return convertView;
     }
 
     @Override
@@ -102,6 +126,8 @@ import java.util.ArrayList;
 
     @Override
     public void onGroupExpanded(int groupPosition) {
+
+
 
     }
 
