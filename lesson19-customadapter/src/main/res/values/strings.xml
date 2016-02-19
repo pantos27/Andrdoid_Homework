@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">lesson19-CustomAdapter</string>
+    <string name="countries">Countires:</string>
+    <string name="KEY_COUNTRIES">countries key</string>
+</resources>
