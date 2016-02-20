@@ -2,6 +2,8 @@ package com.example.veierovioum.lesson19_customadapter;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Veierovioum on 18/02/2016.
  */
-    public class CountryAdapter implements ExpandableListAdapter, AdapterView.OnItemClickListener {
+    public class CountryAdapter implements ExpandableListAdapter, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = "expandAdapter";
     private static final int KEY_HOLDER = 3084;
@@ -96,50 +98,34 @@ import java.util.ArrayList;
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         ArrayAdapter<String> adapter;
+        TextView tv;
         if (convertView==null){
-                convertView=LayoutInflater.from(context).inflate(R.layout.cities_list,null);
+            tv= (TextView) LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,null);
 
-            adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
-            ViewHolder holder=new ViewHolder(adapter);
-            ListView lv=(ListView) convertView.findViewById(R.id.citiesListView);
-
-            lv.setAdapter(adapter);
-            lv.setOnItemClickListener(this);
-            convertView.setTag(holder);
+            tv.setPadding(context.getResources().getDimensionPixelSize(R.dimen.city_item_padding),0,0,0);
+            tv.setPaddingRelative(context.getResources().getDimensionPixelSize(R.dimen.city_item_padding),0,0,0);
+            tv.setBackgroundColor(Color.LTGRAY);
+            tv.setOnClickListener(this);
         }
         else
         {
-            ViewHolder holder=(ViewHolder) convertView.getTag();
-            adapter=holder.getAdapter();
-            adapter.clear();
+            tv= (TextView) convertView;
         }
-        String[] cities=countries.get(groupPosition).getCities();
 
-        for (String city : cities) {
-            adapter.add(city);
-        }
-        adapter.notifyDataSetChanged();
-        return convertView;
+        tv.setText(countries.get(groupPosition).getCities()[childPosition]);
+        return tv;
 
-//        CitiesFragment fragment=new CitiesFragment();
-//
-//        if (convertView==null){
-//            convertView=new FrameLayout(context);
-//            convertView.setId(fragmentContainerID);
-//            convertView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT));
-//            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction()
-//                    .add(convertView.getId(),fragment,"citiesFrag").commit();
-//
-//            Log.d(TAG, "getChildView: fragment added");
-//        }
-//
-//        fragment.setCities(countries.get(groupPosition).getCities());
-//        return convertView;
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(view.getContext(), ((TextView)view).getText(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(v.getContext(), ((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+
     }
 
     class ViewHolder {

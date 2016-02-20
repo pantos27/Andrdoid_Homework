@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ExpandableListView.OnGroupExpandListener {
+public class MainActivity extends AppCompatActivity implements ExpandableListView.OnGroupExpandListener, ExpandableListView.OnGroupCollapseListener {
     private static final String TAG = "expandAdapter";
     ArrayList<Country> countries;
     CountryAdapter adapter;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
         lView.setAdapter(adapter);
 
         lView.setOnGroupExpandListener(this);
+        lView.setOnGroupCollapseListener(this);
 
         //set the listener for an item on the list click
 //        lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
             lView.collapseGroup(expandedGroup);
 
         expandedGroup=groupPosition;
+    }
+
+    @Override
+    public void onGroupCollapse(int groupPosition) {
+        if (groupPosition==expandedGroup)
+            expandedGroup=-1;
     }
 //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
