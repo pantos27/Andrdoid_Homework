@@ -5,9 +5,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +24,7 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class PuzzleActivity extends AppCompatActivity {
+public class PuzzleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -36,6 +42,7 @@ public class PuzzleActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+    private static final String TAG = "PuzzleLog";
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -88,6 +95,11 @@ public class PuzzleActivity extends AppCompatActivity {
             return false;
         }
     };
+    ArrayList<Integer> idArray,correctArray;
+    GridView gView;
+    ImageAdapter adapter;
+    private int item1;
+    private boolean firstMove=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,20 +125,34 @@ public class PuzzleActivity extends AppCompatActivity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        GridView gView=(GridView) findViewById(R.id.gridView);
+        gView=(GridView) findViewById(R.id.gridView);
 
-        ArrayList<Integer> idArray=new ArrayList<>();
-        // TODO: 20/02/2016 fill array
+        idArray=new ArrayList<>();
         fillArray(idArray);
         Collections.shuffle(idArray);
 
-        ImageAdapter adapter=new ImageAdapter();
-
+        adapter=new ImageAdapter(this,idArray);
+        gView.setAdapter(adapter);
+        gView.setOnItemClickListener(this);
+        gView.setOnItemSelectedListener(this);
     }
 
     private void fillArray(ArrayList<Integer> idArray) {
         idArray.add(R.drawable.a0_0);
+        idArray.add(R.drawable.a0_1);
+        idArray.add(R.drawable.a0_2);
+        idArray.add(R.drawable.a0_3);
+        idArray.add(R.drawable.a1_0);
+        idArray.add(R.drawable.a1_1);
+        idArray.add(R.drawable.a1_2);
+        idArray.add(R.drawable.a1_3);
+        idArray.add(R.drawable.a2_0);
+        idArray.add(R.drawable.a2_1);
+        idArray.add(R.drawable.a2_2);
+        idArray.add(R.drawable.a2_3);
 
+        correctArray= (ArrayList<Integer>) idArray.clone();
+        correctArray.equals(idArray);
 
     }
 
@@ -182,4 +208,64 @@ public class PuzzleActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+    Integer selected=-1;
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        if (gView.isSelected()){
+
+        }
+        else
+            Toast.makeText(PuzzleActivity.this, "Select a piece to replace", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        selected=-1;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onItemClick: "+position);
+
+        //checks if this items is already checked
+//        if (gView.isItemChecked(position)){
+//               gView.setItemChecked(position,false);
+//            return;
+//        }
+
+        switch (gView.getCheckedItemCount()) {
+            case 0:
+                Log.d(TAG, "onItemClick: 0 selected");
+
+                //  gView.setItemChecked(position,true);
+                break;
+            case 1:
+                item1=position;
+                if (firstMove)
+                    Toast.makeText(PuzzleActivity.this, "Select a piece to replace", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                switchItems(item1,position);
+                break;
+        }
+    }
+
+    private void switchItems() {
+
+    }
+
+    private void switchItems(int _item1,int item2) {
+        //removes toast message
+        if (firstMove) firstMove=false;
+
+         Log.d(TAG, "switchItems: "+_item1+"&"+item2);
+        //unchecks items
+        gView.setItemChecked(_item1,false);
+        gView.setItemChecked(item2,false);
+        //replaces items
+        Collections.swap(idArray,_item1,item2);
+        adapter.notifyDataSetChanged();
+    }
+
 }
