@@ -1,28 +1,28 @@
 package com.example.veierovioum.lesson19_customadapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
-import android.widget.FrameLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
  * Created by Veierovioum on 18/02/2016.
  */
-    public class CountryAdapter implements ExpandableListAdapter {
+    public class CountryAdapter implements ExpandableListAdapter, AdapterView.OnItemClickListener {
 
     private static final String TAG = "expandAdapter";
+    private static final int KEY_HOLDER = 3084;
     Context context;
-    CitiesFragment fragment;
     ArrayList<Country> countries;
     private static final int fragmentContainerID=000056;
 
@@ -82,6 +82,7 @@ import java.util.ArrayList;
         TextView textView;
         if (convertView == null) {
              textView= (TextView) LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
+
         }
         else
             textView=(TextView) convertView;
@@ -94,19 +95,63 @@ import java.util.ArrayList;
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        if (convertView==null || fragment==null){
-            convertView=new FrameLayout(context);
-            convertView.setId(fragmentContainerID);
-            convertView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT));
-            fragment=new CitiesFragment();
-            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction()
-                    .add(convertView.getId(),fragment,"citiesFrag").commit();
+        ArrayAdapter<String> adapter;
+        if (convertView==null){
+                convertView=LayoutInflater.from(context).inflate(R.layout.cities_list,null);
 
-            Log.d(TAG, "getChildView: fragment added");
+            adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
+            ViewHolder holder=new ViewHolder(adapter);
+            ListView lv=(ListView) convertView.findViewById(R.id.citiesListView);
+
+            lv.setAdapter(adapter);
+            lv.setOnItemClickListener(this);
+            convertView.setTag(holder);
+        }
+        else
+        {
+            ViewHolder holder=(ViewHolder) convertView.getTag();
+            adapter=holder.getAdapter();
+            adapter.clear();
+        }
+        String[] cities=countries.get(groupPosition).getCities();
+
+        for (String city : cities) {
+            adapter.add(city);
+        }
+        adapter.notifyDataSetChanged();
+        return convertView;
+
+//        CitiesFragment fragment=new CitiesFragment();
+//
+//        if (convertView==null){
+//            convertView=new FrameLayout(context);
+//            convertView.setId(fragmentContainerID);
+//            convertView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT));
+//            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction()
+//                    .add(convertView.getId(),fragment,"citiesFrag").commit();
+//
+//            Log.d(TAG, "getChildView: fragment added");
+//        }
+//
+//        fragment.setCities(countries.get(groupPosition).getCities());
+//        return convertView;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(view.getContext(), ((TextView)view).getText(), Toast.LENGTH_SHORT).show();
+    }
+
+    class ViewHolder {
+        ArrayAdapter<String> adapter;
+
+        public ViewHolder(ArrayAdapter<String> adapter) {
+            this.adapter = adapter;
         }
 
-        fragment.setCities(countries.get(groupPosition).getCities());
-        return convertView;
+        public ArrayAdapter<String> getAdapter() {
+            return adapter;
+        }
     }
 
     @Override

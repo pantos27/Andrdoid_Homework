@@ -15,10 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:id="@+id/txtCountries"
         android:text="@string/countries" />
 
 
     <ExpandableListView
+        android:layout_below="@id/txtCountries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listViewCountries" />
