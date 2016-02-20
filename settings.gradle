@@ -1,1 +1,1 @@
-include ':lesson12', ':lesson16-balls',':lesson19-customadapter'
+include ':lesson12', ':lesson16-balls', ':lesson19-customadapter', ':lesson19-puzzle'
