@@ -10,17 +10,22 @@
          TextureView, etc. -->
     <RelativeLayout
         android:id="@+id/fullscreen_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <GridView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gridView"
-            android:drawSelectorOnTop="true"
-            android:listSelector="@drawable/selector"
             android:numColumns="4"
+            android:stretchMode="none"
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"
             android:choiceMode="multipleChoice"
-            android:layout_centerInParent="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+             />
     </RelativeLayout>
 
 
@@ -42,12 +47,13 @@
             tools:ignore="UselessParent">
 
             <Button
-                android:id="@+id/dummy_button"
+                android:id="@+id/reshuffle_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:onClick="onReshuffleClick"
+                android:text="@string/reshufle_button" />
 
         </LinearLayout>
     </FrameLayout>

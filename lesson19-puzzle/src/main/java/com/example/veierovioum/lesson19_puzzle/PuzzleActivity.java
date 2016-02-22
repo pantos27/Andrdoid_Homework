@@ -1,6 +1,8 @@
 package com.example.veierovioum.lesson19_puzzle;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,13 +125,21 @@ public class PuzzleActivity extends AppCompatActivity implements AdapterView.OnI
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.reshuffle_button).setOnTouchListener(mDelayHideTouchListener);
 
         gView=(GridView) findViewById(R.id.gridView);
 
         idArray=new ArrayList<>();
         fillArray(idArray);
         Collections.shuffle(idArray);
+
+        Drawable frame;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            frame=getResources().getDrawable(R.drawable.a0_0, getTheme());
+        }
+        else             frame =getResources().getDrawable(R.drawable.a0_0);
+
+        gView.setColumnWidth(frame.getIntrinsicWidth());
 
         adapter=new ImageAdapter(this,idArray);
         gView.setAdapter(adapter);
@@ -237,13 +247,14 @@ public class PuzzleActivity extends AppCompatActivity implements AdapterView.OnI
         switch (gView.getCheckedItemCount()) {
             case 0:
                 Log.d(TAG, "onItemClick: 0 selected");
-
-                //  gView.setItemChecked(position,true);
+                //  deselect for ui purpose
+                view.setSelected(false);
                 break;
             case 1:
                 item1=position;
+                view.setSelected(true);
                 if (firstMove)
-                    Toast.makeText(PuzzleActivity.this, "Select a piece to replace", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PuzzleActivity.this, "Select a piece to replace", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 switchItems(item1,position);
@@ -251,9 +262,7 @@ public class PuzzleActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-    private void switchItems() {
 
-    }
 
     private void switchItems(int _item1,int item2) {
         //removes toast message
@@ -262,9 +271,24 @@ public class PuzzleActivity extends AppCompatActivity implements AdapterView.OnI
          Log.d(TAG, "switchItems: "+_item1+"&"+item2);
         //unchecks items
         gView.setItemChecked(_item1,false);
-        gView.setItemChecked(item2,false);
+        gView.setItemChecked(item2, false);
         //replaces items
         Collections.swap(idArray,_item1,item2);
+        adapter.notifyDataSetChanged();
+        checkComplete();
+    }
+
+    private void checkComplete(){
+        if (idArray.equals(correctArray)){
+
+            Toast.makeText(PuzzleActivity.this, "All done, Congratulations!", Toast.LENGTH_SHORT).show();
+            toggle();
+
+        }
+    }
+
+    public void onReshuffleClick(View v){
+        Collections.shuffle(idArray);
         adapter.notifyDataSetChanged();
     }
 

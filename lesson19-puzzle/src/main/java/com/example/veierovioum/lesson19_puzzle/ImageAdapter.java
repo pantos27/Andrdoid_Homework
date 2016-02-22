@@ -41,11 +41,13 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView==null) {
             imageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.puzzle_image_view, null);
+//            imageView.setAdjustViewBounds(false);
+
         }
         else {
             imageView=(ImageView) convertView;
         }
-
+//        imageView.setMaxHeight();
         imageView.setImageResource(idList.get(position));
 
         return imageView;
