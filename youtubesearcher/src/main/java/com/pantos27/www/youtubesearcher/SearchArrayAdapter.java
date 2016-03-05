@@ -22,7 +22,7 @@ public class SearchArrayAdapter extends ArrayAdapter<String> {
     public SearchArrayAdapter(Context context, int resource) {
         super(context, resource);
         Log.d(TAG, "SearchArrayAdapter: ");
-        searchService=SearchService.getInstance();
+        searchService=new SearchService();
     }
 
     @Override
