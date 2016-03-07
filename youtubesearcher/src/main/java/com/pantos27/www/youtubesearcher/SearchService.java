@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
@@ -28,55 +31,34 @@ import retrofit2.http.Query;
 public final class SearchService {
 
     private static final String TAG = "searcher-searchService";
-//    private static SearchService ourInstance = new SearchService();
     public static final String API_URL="http://suggestqueries.google.com";
     public static final HttpUrl url=HttpUrl.parse(API_URL);
 
-//    public static SearchService getInstance() {
-//        Log.d(TAG, "getInstance: ");
-//        if (ourInstance == null) {
-//            Log.e(TAG, "getInstance: no instance",new NullPointerException() );
-//        }
-//        return ourInstance;
-//    }
 
-    private Retrofit retrofit=new Retrofit.Builder().baseUrl(url).addConverterFactory(SimpleXmlConverterFactory.create()).build();
+
+//    Converter factory= Converter.Factory();
+    private Retrofit retrofit=new Retrofit.Builder().baseUrl(url).addConverterFactory(new GsonConverterFactory().requestBodyConverter()).build();
     private SuggestQueries suggestQueries=retrofit.create(SuggestQueries.class);
 
     public SearchService() {
         Log.d(TAG, "SearchService: constractor");
-
+        retrofit.requestBodyConverter()
     }
 
 
     public static class SearchResult{
-        public final String[] query;
         public final String[] results;
 
         public SearchResult(String[] query, String[] results) {
             Log.d(TAG, "SearchResult: constractor");
-            this.query = query;
+//            this.query = query;
             this.results = results;
         }
-    }
-    @Root
-    public class Toplevel {
-        @Path("CompleteSuggestion/suggestion")
-        @Element
-        public String data;
-//
-//        public class CompleteSuggestion {
-//            public Suggestion suggestion;
-//
-//            public class Suggestion {
-//                public String data;
-//            }
-//        }
     }
 
         public interface SuggestQueries{
         @GET ("/complete/search")
-        Call<List<Toplevel>> searchResults(
+        Call<String[]> searchResults(
                 @Query("q") String query,
                 @Query("client") String client);
     }
@@ -112,21 +94,13 @@ public final class SearchService {
     public String[] getResults(String query) {
 
         Log.d(TAG, "getResults: "+query);
-        Call<List<Toplevel>> call=suggestQueries.searchResults(query,"firefox");
+        Call<String[]> call=suggestQueries.searchResults(query,"firefox");
 
         try {
-            List<Toplevel> results=call.execute().body();
-            ArrayList<String> stringResults=new ArrayList<>();
-
-            for (Toplevel result : results) {
-
-                    stringResults.add(result.data);
-
-            }
-            String[] toReturn=new String[stringResults.size()];
-            return stringResults.toArray(toReturn);
+            return call.execute().body();
 
         } catch (IOException e) {
+            Log.e(TAG, "getResults: "+call.toString(), e);
             e.printStackTrace();
         }
         return null;
